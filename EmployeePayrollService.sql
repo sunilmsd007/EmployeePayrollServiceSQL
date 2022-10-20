@@ -44,3 +44,26 @@ select avg(Salary), gender from employee_payroll group by Gender;
 select max(Salary), gender from employee_payroll group by Gender; 
 select min(Salary), gender from employee_payroll group by Gender; 
 select count(Name), gender from employee_payroll group by Gender;  
+
+-- create department table-----
+create table Department(ID int not null primary key, Department varchar(255));
+insert into department values(1, "Computer Science"), (2, "Civil"), (3, "Mechanical"), (4, "Electrical");
+select * from department;
+describe department;
+
+--- create employee_department table----
+create table employee_department(Dept_ID int not null , Department varchar(255), EMP_ID int NOT NULL, Name varchar(255), FOREIGN KEY(EMP_ID) REFERENCES employee_payroll(ID), FOREIGN KEY(Dept_ID) REFERENCES department(ID));
+insert into employee_department values(1, "Computer Science", 1, "Sunil"),(2,"Civil", 2, "Anand"),(3, "Mechanical", 3,"Ram" ), (4, "Electrical", 4, "Sita"),(1,"Computer Science",5, "Diya" ),(2,"Civil",6, "Rakshit" );
+describe employee_department;
+show tables;
+
+---- to retreive department data of all the employees----
+select * from employee_department;
+
+--- to retreive data from both the table using join---
+select ID,Salary,Department from employee_payroll join employee_department on employee_payroll.ID=employee_department.EMP_ID;
+select employee_payroll.Name,ID,Salary,Department from employee_payroll join employee_department on employee_payroll.ID=employee_department.EMP_ID;
+
+--- to retreive data of particular department----
+select employee_payroll.Name,ID,Salary,Department from employee_payroll join employee_department on employee_payroll.ID=employee_department.EMP_ID where Department="Computer Science";
+
